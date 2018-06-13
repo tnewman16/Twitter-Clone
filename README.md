@@ -3,7 +3,10 @@ A Twitter backend written in Scala using the Tagless Final interpreter pattern.
 
 ## Getting Started
 
-To get a copy of the project localy, simply clone this repository using the command `git clone https://github.com/tnewman16/Twitter-Clone.git`.
+To get a copy of the project localy, simply clone this repository using the following command:
+```sh
+git clone https://github.com/tnewman16/Twitter-Clone.git
+```
 
 ### Prerequisites
 
@@ -18,18 +21,18 @@ To run this project locally, you must the following technologies installed on yo
 First we will create a PostgreSQL database that will be used to store the test data. Steps for doing this can be found on [doobie's website](https://tpolecat.github.io/doobie/docs/01-Introduction.html).
 
 In this case, we will create a user named `postgres` and a database named `twitter`, like so:
-```
+```sh
 psql -c 'create user postgres createdb'
 psql -c 'create database twitter;' -U postgres
 ```
 
 In order to get the test data into the `twitter` database, we will use the [`init.sql`](/sql/init.sql) script found in the [`/sql`](/sql) folder:
-```
+```sh
 psql -c '\i init.sql' -d twitter -U postgres
 ```
 
 **NOTE:** If you wish to reset the database at any time, execute the [`delete.sql`](/sql/delete.sql) and [`init.sql`](/sql/init.sql) scripts in consecutive order:
-```
+```sh
 psql -c '\i delete.sql' -d twitter -U postgres
 psql -c '\i init.sql' -d twitter -U postgres
 ```
@@ -41,6 +44,8 @@ To ensure that everything is working correctly, simply run the [`Test.scala`](/s
 To host the Twitter server locally, we have to run the [`TwitterServer.scala`](src/main/scala/com.casestudy.twitter/server/TwitterServer.scala) file. This will spin up the `http4s` server locally on port `8081`.
 
 Once the server is up and running, open up a browser and try hitting one one of the valid endpoints, such as `http://localhost:8081/users/tnewman/feed`. You should then see a JSON object being returned as the response.
+
+**NOTE:** A frontend written in [React](https://reactjs.org) has been created for this project, but has not yet been connected with the backend.
 
 ## Built With
 
