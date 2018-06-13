@@ -45,8 +45,6 @@ To host the Twitter server locally, we have to run the [`TwitterServer.scala`](s
 
 Once the server is up and running, open up a browser and try hitting one one of the valid endpoints, such as `http://localhost:8081/users/tnewman/feed`. You should then see a JSON object being returned as the response.
 
-**NOTE:** A frontend written in [React](https://reactjs.org) has been created for this project, but has not yet been connected with the backend.
-
 ## Built With
 
 * [Scala](https://www.scala-lang.org) - programming language
