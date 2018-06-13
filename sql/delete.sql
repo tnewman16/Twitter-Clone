@@ -1,0 +1,3 @@
+DROP TABLE "users" CASCADE;
+DROP TABLE "following" CASCADE;
+DROP TABLE "tweets" CASCADE;
