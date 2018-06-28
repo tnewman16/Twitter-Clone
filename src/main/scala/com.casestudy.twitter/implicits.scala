@@ -1,9 +1,13 @@
 package com.casestudy.twitter
 
+import cats.effect.IO
 import com.casestudy.twitter.model._
+import com.casestudy.twitter.types._
 import io.circe.{Encoder, Json}
 import io.circe.literal._
 import io.circe.syntax._
+import org.http4s._
+import org.http4s.circe._
 
 object implicits {
     lazy implicit val userEncoder: Encoder[User] = (u: User) =>

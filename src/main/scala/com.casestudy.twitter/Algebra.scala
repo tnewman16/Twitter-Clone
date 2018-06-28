@@ -2,15 +2,15 @@ package com.casestudy.twitter
 
 import java.util.Date
 
-trait Algebra[F[_]] {
-    def tweet(user: String, date: Date, text: String): F[_]
-    def deleteTweet(user: String, tweetId: Int): F[_]
-    def follow(followerUsername: String, followingUsername: String): F[_]
-    def unFollow(followerUsername: String, followingUsername: String): F[_]
-    def fetchUser(username: String): F[_]
-    def fetchTweet(id: Int): F[_]
-    def fetchTweets(user: String): F[_]
-    def fetchFeed(user: String): F[_]
-    def fetchFollowing(user: String): F[_]
-    def fetchFollowers(user: String): F[_]
+trait Algebra[F[_], A] {
+    def tweet(user: String, date: Date, text: String): F[A]
+    def deleteTweet(user: String, tweetId: Int): F[A]
+    def follow(followerUsername: String, followingUsername: String): F[A]
+    def unFollow(followerUsername: String, followingUsername: String): F[A]
+    def fetchUser(username: String): F[A]
+    def fetchTweet(id: Int): F[A]
+    def fetchTweets(user: String): F[A]
+    def fetchFeed(user: String): F[A]
+    def fetchFollowing(user: String): F[A]
+    def fetchFollowers(user: String): F[A]
 }

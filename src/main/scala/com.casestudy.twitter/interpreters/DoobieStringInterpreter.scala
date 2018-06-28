@@ -9,10 +9,10 @@ import doobie.implicits._
 import doobie.util.transactor.Transactor
 import doobie.util.transactor.Transactor.Aux
 
-object DoobieStringInterpreter extends Algebra[IO] {
+object DoobieStringInterpreter extends Algebra[IO, String] {
     val xa: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
-        "jdbc:postgresql:twitter",
+        "jdbc:postgresql://[::1]/twitter",
         "postgres",
         ""
     )

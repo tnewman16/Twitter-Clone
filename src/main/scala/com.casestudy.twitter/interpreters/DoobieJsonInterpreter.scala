@@ -13,10 +13,10 @@ import io.circe.literal._
 import io.circe.syntax._
 import io.circe._
 
-object DoobieJsonInterpreter extends Algebra[IO]{
+object DoobieJsonInterpreter extends Algebra[IO, Json] {
     val xa: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
-        "jdbc:postgresql:twitter",
+        "jdbc:postgresql://[::1]/twitter",
         "postgres",
         ""
     )

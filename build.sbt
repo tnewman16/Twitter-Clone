@@ -8,6 +8,7 @@ val catsVersion    = "1.0.1"
 val http4sVersion  = "0.18.8"
 val circeVersion   = "0.9.3"
 val doobieVersion  = "0.5.3"
+val fs2Version     = "0.10.4"
 val specs2Version  = "4.0.3"
 val logbackVersion = "1.2.3"
 
@@ -17,11 +18,13 @@ libraryDependencies ++= Seq(
     "org.http4s"      %% "http4s-blaze-server" % http4sVersion,
     "org.http4s"      %% "http4s-circe"        % http4sVersion,
     "org.http4s"      %% "http4s-dsl"          % http4sVersion,
+    "org.http4s"      %% "http4s-blaze-client" % http4sVersion,
     "io.circe"        %% "circe-generic"       % circeVersion,
     "io.circe"        %% "circe-literal"       % circeVersion,
     "org.tpolecat"    %% "doobie-core"         % doobieVersion,
     "org.tpolecat"    %% "doobie-postgres"     % doobieVersion,
     "org.tpolecat"    %% "doobie-specs2"       % doobieVersion,
+    "co.fs2"          %% "fs2-core"            % fs2Version,
     "org.specs2"      %% "specs2-core"         % specs2Version % "test",
     "ch.qos.logback"  %  "logback-classic"     % logbackVersion
 )

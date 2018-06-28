@@ -3,6 +3,7 @@ package com.casestudy.twitter.server
 import java.util.Date
 
 import cats.effect.IO
+import com.casestudy.twitter.Algebra
 import com.casestudy.twitter.interpreters._
 import io.circe.Json
 import org.http4s.HttpService
@@ -10,23 +11,25 @@ import org.http4s.dsl.io._
 import org.http4s.circe._
 
 object TwitterService {
+    val interpreter = DoobieStreamInterpreter
+    val stringInterpreter: Algebra[IO, String] = DoobieStringInterpreter
+
     val service: HttpService[IO] = {
         HttpService[IO] {
-            // basic endpoints always send responses as JSON
             case GET -> Root / "users" / username =>
-                Ok(DoobieJsonInterpreter.fetchUser(username))
+                Ok(interpreter.fetchUser(username))
             case GET -> Root / "users" / username / "tweets" =>
-                Ok(DoobieJsonInterpreter.fetchTweets(username))
+                Ok(interpreter.fetchTweets(username))
             case GET -> Root / "users" / username / "followers" =>
-                Ok(DoobieJsonInterpreter.fetchFollowers(username))
+                Ok(interpreter.fetchFollowers(username))
             case GET -> Root / "users" / username / "following" =>
-                Ok(DoobieJsonInterpreter.fetchFollowing(username))
+                Ok(interpreter.fetchFollowing(username))
             case GET -> Root / "users" / username / "feed" =>
-                Ok(DoobieJsonInterpreter.fetchFeed(username))
+                Ok(interpreter.fetchFeed(username))
             case GET -> Root / "users" / username / "follow" / followeeUsername =>
-                Ok(DoobieJsonInterpreter.follow(username, followeeUsername))
+                Ok(interpreter.follow(username, followeeUsername))
             case GET -> Root / "users" / username / "unfollow" / followeeUsername =>
-                Ok(DoobieJsonInterpreter.unFollow(username, followeeUsername))
+                Ok(interpreter.unFollow(username, followeeUsername))
             case GET -> Root / "users" / username / "unfollow" / followeeUsername =>
                 Ok(DoobieStringInterpreter.unFollow(username, followeeUsername))
             case req @ POST -> Root / "users" / username / "tweet" =>
@@ -34,30 +37,30 @@ object TwitterService {
                     json <- req.as[Json]
                     content = json.hcursor.downField("content").as[String]
                     response <- content match {
-                        case Right(c) => Ok(DoobieJsonInterpreter.tweet(username, new Date(), c))
+                        case Right(c) => Ok(interpreter.tweet(username, new Date(), c))
                         case _ => BadRequest()
                     }
                 } yield response
             case DELETE -> Root / "users" / username / "tweets" / IntVar(id) =>
-                Ok(DoobieJsonInterpreter.deleteTweet(username, id))
+                Ok(interpreter.deleteTweet(username, id))
             case GET -> Root / "tweets" / IntVar(id) =>
-                Ok(DoobieJsonInterpreter.fetchTweet(id))
+                Ok(interpreter.fetchTweet(id))
 
-            // endpoints ending with "/string" return responses as strings
+            // endpoints ending with "/string" return responses as Strings
             case GET -> Root / "users" / username / "string" =>
-                Ok(DoobieStringInterpreter.fetchUser(username))
+                Ok(stringInterpreter.fetchUser(username))
             case GET -> Root / "users" / username / "tweets" / "string" =>
-                Ok(DoobieStringInterpreter.fetchTweets(username))
+                Ok(stringInterpreter.fetchTweets(username))
             case GET -> Root / "users" / username / "followers" / "string" =>
-                Ok(DoobieStringInterpreter.fetchFollowers(username))
+                Ok(stringInterpreter.fetchFollowers(username))
             case GET -> Root / "users" / username / "following" / "string" =>
-                Ok(DoobieStringInterpreter.fetchFollowing(username))
+                Ok(stringInterpreter.fetchFollowing(username))
             case GET -> Root / "users" / username / "feed" / "string" =>
-                Ok(DoobieStringInterpreter.fetchFeed(username))
+                Ok(stringInterpreter.fetchFeed(username))
             case GET -> Root / "users" / username / "follow" / followeeUsername / "string" =>
-                Ok(DoobieStringInterpreter.follow(username, followeeUsername))
+                Ok(stringInterpreter.follow(username, followeeUsername))
             case GET -> Root / "tweets" / IntVar(id) / "string" =>
-                Ok(DoobieStringInterpreter.fetchTweet(id))
+                Ok(stringInterpreter.fetchTweet(id))
         }
     }
 }

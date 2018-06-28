@@ -23,18 +23,18 @@ First we will create a PostgreSQL database that will be used to store the test d
 In this case, we will create a user named `postgres` and a database named `twitter`, like so:
 ```sh
 psql -c 'create user postgres createdb'
-psql -c 'create database twitter;' -U postgres
+psql -c 'create database twitter' -U postgres
 ```
 
 In order to get the test data into the `twitter` database, we will use the [`init.sql`](/sql/init.sql) script found in the [`/sql`](/sql) folder:
 ```sh
-psql -c '\i init.sql' -d twitter -U postgres
+psql -c '\i sql/init.sql' -d twitter -U postgres
 ```
 
 **NOTE:** If you wish to reset the database at any time, execute the [`delete.sql`](/sql/delete.sql) and [`init.sql`](/sql/init.sql) scripts in consecutive order:
 ```sh
-psql -c '\i delete.sql' -d twitter -U postgres
-psql -c '\i init.sql' -d twitter -U postgres
+psql -c '\i sql/delete.sql' -d twitter -U postgres
+psql -c '\i sql/init.sql' -d twitter -U postgres
 ```
 
 To ensure that everything is working correctly, simply run the [`Test.scala`](/src/main/scala/com.casestudy.twitter/Test.scala). This should output basic information from the database to the console.
